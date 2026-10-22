@@ -1,6 +1,26 @@
-# Sliding Window Protocol Simulator — Backend
+# Sliding Window Protocol Simulator
 
-A fully event-driven Python simulation engine implementing **Go-Back-N (GBN)** and **Selective Repeat (SR)** ARQ protocols, complete with packet/ACK loss, timeouts, retransmissions, sliding windows, event logging, and performance metrics.
+A fully event-driven Python simulation engine implementing **Go-Back-N (GBN)** and **Selective Repeat (SR)** ARQ protocols, complete with packet/ACK loss, timeouts, retransmissions, sliding windows, event logging, and performance metrics — now with an interactive **Streamlit GUI**.
+
+---
+
+## Run the GUI
+
+```
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+Then open the URL Streamlit prints (usually http://localhost:8501).
+
+**GUI features**
+
+- Sidebar controls for protocol, packet count, window size, packet loss, ACK loss, corruption, jitter, propagation delay, timeout, max retries and a fixed seed (changing any setting restarts the run)
+- **Step**, **Step ×5**, **Run to end**, **Reset**, and an animated **Play** mode with adjustable speed
+- Live sender and receiver windows with colour-coded packet states (window bounds and base highlighted)
+- Sender/receiver **sequence diagram** showing data, ACKs, losses, corruption and timeouts
+- Full event log with CSV download, and live metrics
+- **Compare** tab: Go-Back-N vs Selective Repeat averaged over several seeds, plus an efficiency-vs-loss sweep
 
 ---
 
@@ -8,20 +28,24 @@ A fully event-driven Python simulation engine implementing **Go-Back-N (GBN)** a
 
 ```
 sliding-window-simulator/
+├── app.py               — Streamlit GUI
+├── requirements.txt     — GUI + test dependencies
 ├── network.py           — Packet/ACK data classes, enums, NetworkChannel
 ├── go_back_n.py         — Go-Back-N ARQ engine
 ├── selective_repeat.py  — Selective Repeat ARQ engine
 ├── simulation.py        — Public API (SimulationEngine, create_simulation)
 ├── metrics.py           — Performance metric calculation
+├── demo.py              — Console demo
+├── compare.py           — Console GBN vs SR benchmark
 ├── tests/
 │   ├── __init__.py
-│   └── test_protocols.py — 44 automated correctness tests
+│   └── test_protocols.py — automated correctness tests
 └── README.md
 ```
 
 ---
 
-## Quick Start (for Person 2 — Streamlit Frontend)
+## Engine Quick Start (Python API)
 
 ```python
 from simulation import create_simulation
